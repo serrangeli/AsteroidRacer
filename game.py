@@ -24,7 +24,7 @@ class AsteroidsWindow(pyglet.window.Window):
         self.explosion_sound = pyglet.resource.media("bigbomb.wav", streaming=False)
         self.background_music = pyglet.resource.media("cyber-soldier.wav", streaming=False)
 
-        self.ship = pyglet.sprite.Sprite(img=self.ship_image, x=30, y=30)
+        self.ship = pyglet.sprite.Sprite(img=self.ship_image, x=10, y=10)
         self.ship.scale = 0.3
         self.ship.rotation = 180
 
@@ -37,6 +37,7 @@ class AsteroidsWindow(pyglet.window.Window):
 
         pyglet.clock.schedule_interval(self.game_tick, 0.005)
         self.background_music.play()
+        #pyglet.clock.schedule_interval(lambda x: self.background_music.play(), 13.8)
         pyglet.clock.schedule_interval(lambda x: self.background_music.play(), 13.8)
 
     def game_tick(self, dt):
@@ -77,12 +78,17 @@ class AsteroidsWindow(pyglet.window.Window):
                 self.asteroids.remove(asteroid)
                 self.score = 0
                 self.explosion_sound.play()
+            #    self.center_image(self.ship)
 
     def update_ship(self):
         if self.keys[pyglet.window.key.LEFT] and not self.ship.x < 0:
             self.ship.x -= 4
         elif self.keys[pyglet.window.key.RIGHT] and not self.ship.x > 625:
             self.ship.x += 4
+        elif self.keys[pyglet.window.key.UP] and not self.ship.y > 625:
+            self.ship.y += 4
+        elif self.keys[pyglet.window.key.DOWN] and not self.ship.y < 0:
+            self.ship.y -= 4
 
     def update_score(self):
         self.score += 1
